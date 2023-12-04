@@ -1,4 +1,4 @@
-from settings import URL, API_KEY
+from settings import URL, API_KEY, cart_msg
 import requests
 from time import sleep
 from randommer import card
@@ -78,7 +78,14 @@ def main(url: str):
             elif text == '/card':
                 cart_data = c.get_card(api_key=API_KEY)
                 date_object = datetime.fromisoformat(cart_data['date'])
-                msg = f"🏦<b>{cart_data['type']}</b>\n\n👤 {cart_data['fullName']}\n💳 {cart_data['cardNumber']}\ncvv: {cart_data['cvv']}\npin:{cart_data['pin']}\n📅 {date_object.strftime('%Y-%m-%d')}"
+                msg = cart_msg.format(
+                    bank=cart_data['type'],
+                    fullname=cart_data['fullName'],
+                    number=cart_data['cardNumber'],
+                    pin=cart_data['pin'],
+                    cvv=cart_data['cvv'],
+                    date=date_object.strftime('%Y-%m-%d')
+                    )
                 send_message(url, user['id'], msg, mode=True)
 
             elif text == '/busywork':
