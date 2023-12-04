@@ -1,5 +1,5 @@
 import requests
-from randommer import Randommer
+from .randommer import Randommer
 
 class Finance(Randommer):
     def get_crypto_address_types(self, api_key: str) -> list:
